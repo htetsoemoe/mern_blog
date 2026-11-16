@@ -1,0 +1,6 @@
+simulation: blog-client-qa
+routing: path
+mocks:
+  - name: blog-api
+    routeKey: api
+    path: postman/mocks/blog/config.yaml

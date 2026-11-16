@@ -1,0 +1,23 @@
+purpose:
+  stands_in_for: Existing Express blog HTTP API, modeled from the local controllers.
+  unblocks: Local browser verification without accessing the user's MongoDB database.
+assumptions:
+  - id: controller-request-contracts
+    status: supported
+    claim: The client uses the methods, route paths, upload keys and JSON field names defined by the inspected server controllers.
+    reason: The model is derived from local server code, not a third-party contract. Only the covered routes are modeled.
+    verification: Source inspection on 2026-11-16 and 6 passing Edge browser scenarios against this simulation. Logged POST multipart creation, PATCH JSON editing, DELETE, profile and avatar writes, read failure/retry, write failure/retry and expired-session recovery. See VERIFICATION.md. This is not live database verification.
+    source: ../server/routes/userRoutes.js; ../server/routes/postRoutes.js; ../server/controllers/userControllers.js; ../server/controllers/postControllers.js; tests/browser/blog.spec.js
+    updated_at: '2026-11-16'
+  - id: real-server-runtime
+    status: unknown
+    claim: A configured live server accepts the same writes and stores files and MongoDB records successfully.
+    reason: The simulation does not run Mongoose, password hashing, filesystem moves or the production JWT verifier.
+    verification: Not executed against a live database. Requires a disposable account and configured server.
+    source: ../server/index.js; ../server/controllers/postControllers.js; ../server/controllers/userControllers.js
+    updated_at: '2026-11-16'
+fingerprints:
+  - id: initial-local-client
+    date: '2026-11-16'
+    commit: uncommitted local client implementation; server files left unchanged
+    cli: Postman CLI 1.74.0
